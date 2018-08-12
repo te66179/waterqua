@@ -1,5 +1,5 @@
 <?php
-namespace Bluerhinos;
+namespace waterqua;
 /*
  	phpMQTT
 	A simple php class to connect/publish/subscribe to an MQTT broker
