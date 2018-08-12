@@ -5,9 +5,10 @@ use \LINE\LINEBot;
 
 require(“phpMQTT.php”);
 
-$mqtt = new phpMQTT(“www.yourmqttserver.com”, 1883, “phpMQTT Pub Example”); 
+$mqtt = new phpMQTT(“https://water01.herokuapp.com”, 1883, “phpMQTT Pub Example”); 
 
-$token = “your line messaging api token”; //นำ token ที่มาจาก line developer account ของเรามาใส่ครับ
+$token = “9V0ilgaZpGuc6Ywwnm3Er6ogwGcZ4ikYn1JMPt4pTDRLoz+F8qGQqJb3riiO3mixc9lKFGBkXc4vE/tv97bjigKMgqkAYLffV7qULxM24Bkb3yNFAha7q36zZsYAVH9KClTNMuWAbPK2is+dz73agQdB04t89/1O/w1cDnyilFU=
+”;
 
 $httpClient = new CurlHTTPClient($token);
 $bot = new LINEBot($httpClient, [‘channelSecret’ => $token]);
@@ -25,21 +26,34 @@ if (preg_match(“/สวัสดี/”, $text)) {
 $text = “มีอะไรให้จ่าวิสรับใช้ครับ”;
 }
 
-if (preg_match(“/เปิดทีวี/”, $text)) {     //หากในแชตที่ส่งมามีคำว่า เปิดทีวี ก็ให้ส่ง mqtt ไปแจ้ง server เราครับ
-if ($mqtt->connect()) {
-$mqtt->publish(“/ESP/REMOTE”,”TV”); // ตัวอย่างคำสั่งเปิดทีวีที่จะส่งไปยัง mqtt server
-$mqtt->close();
+if (preg_match(“/Ph/”, $text))
+{
+  if ($mqtt->connect()) 
+  {
+    $mqtt->publish(“/ESP/REMOTE”,$text);
+    $mqtt->close();
+  }
+  $text = “ใส่ค่า Ph ให้แล้วครับ”;
 }
-$text = “เปิดทีวีให้แล้วคร้าบบบบ”;
+if (preg_match(“/Cl/”, $text)
+{
+  if ($mqtt->connect()) 
+  {
+    $mqtt->publish(“/ESP/REMOTE”,$text);
+    $mqtt->close();
+  }
+  $text = “ใส่ค่าคลอลีนให้แล้วครับ”;
 }
-if (preg_match(“/ปิดทีวี/”, $text) and !preg_match(“/เปิดทีวี/”, $text)) {
-if ($mqtt->connect()) {
-$mqtt->publish(“/ESP/REMOTE”,”TV”);
-$mqtt->close();
+if (preg_match(“/ความขุ่น/”, $text)
+{
+  if ($mqtt->connect()) 
+  {
+    $mqtt->publish(“/ESP/REMOTE”,text);
+    $mqtt->close();
+  }
+  $text = “ใส่ค่าความขุ่นให้แล้วครับ”;
 }
-$text = “จ่าปิดทีวีให้แล้วนะครับ!!”;
-}
-$response = $bot->replyText($event->replyToken, $text); // ส่งคำ reply กลับไปยัง line application
+$response = $bot->replyText($event->replyToken, $text);
 
 }
 }
